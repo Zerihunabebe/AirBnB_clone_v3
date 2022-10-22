@@ -13,22 +13,8 @@ api.env.key_filename = '~/.ssh/holberton'
 
 def do_deploy(archive_path):
     """Function to transfer `archive_path` to web servers.
-
-    Args:
-        archive_path (str): path of the .tgz file to transfer
-
-    Returns: True on success, False otherwise.
-    """
-    if not os.path.isfile(archive_path):
-        return False
-    with api.cd('/tmp'):
-        basename = os.path.basename(archive_path)
-        root, ext = os.path.splitext(basename)
-        outpath = '/data/web_static/releases/{}'.format(root)
-        try:
-            putpath = api.put(archive_path)
-            if files.exists(outpath):
-                api.run('rm -rdf {}'.format(outpath))
+    """     
+            api.run('rm -rdf {}'.format(outpath))
             api.run('mkdir -p {}'.format(outpath))
             api.run('tar -xzf {} -C {}'.format(putpath[0], outpath))
             api.run('rm -f {}'.format(putpath[0]))
